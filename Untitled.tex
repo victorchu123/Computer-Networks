@@ -1,0 +1,212 @@
+\documentclass[oneside]{article}
+\usepackage{fullpage}
+\usepackage{epsf}
+\usepackage{epsfig}
+\usepackage{subfigure}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+%\renewcommand{\topfraction}{0.9}
+%\renewcommand{\bottomfraction}{0.8}
+%\setcounter{topnumber}{2}
+%\setcounter{bottomnumber}{2}
+%\setcounter{totalnumber}{2}
+%\setcounter{dbltopnumber}{2}
+%\renewcommand{\dbltopfraction}{0.9}
+%\renewcommand{\textfraction}{0.07}
+%\renewcommand{\floatpagefraction}{0.7}
+%\renewcommand{\dblfloatpagefraction}{0.7}
+\makeatletter
+\usepackage[top = 0.9in, bottom=1.in, left=1.in, right=1.in]{geometry}
+\usepackage{lastpage}
+\def\ps@headings{
+\def\@oddhead{\large {{\bf Homework 1}}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ \large {{\bf Due: September 27, 2016}}}
+
+\def\@oddfoot{Wesleyan University, COMP360, Section 1, Fall 2016~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ \mbox{Page \thepage\ of \pageref{LastPage}}}
+
+\def\@evenhead{}
+\def\@evenfoot{}}
+\makeatother
+\pagestyle{headings}
+\setlength\headheight{0in}
+\setlength\headsep{0.3in}
+
+\begin{document}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+\usepackage{amsmath} 
+\begin{document}
+
+\subsection* {Homework 1: Victor Chu, 9/24}
+ 
+%=============================================================================
+
+
+
+%=============================================================================
+\subsection* {\underline{Question 1}}
+
+\begin{description}
+
+\item{{\bf (a)}} The maximum number of users M$_{c}$ that circuit switching can support is \(\frac{R}{r}\).
+
+\item{{\bf (b)}} 
+
+  \begin{description}
+   \item{\em i.} The probability that a given user is transmitting is p.
+
+  \item{\em ii.} The formula for the probability that exactly N of the M$_{p}$ users are transmitting is: 
+
+\[ {M_p \choose N} p ^ N (1-p) ^ {M_p - N} \]
+
+
+  
+
+  \item{\em iii.} The formula for the probability that more than N of the Mp users are transmitting is:
+
+\[ 1 - { \sum_{i = 0}^{N}} {M_p \choose i} p^i (1-p)^{M_p - i} \]
+
+  \end{description}
+
+\item{{\bf (c)}}
+  \begin{description}
+  \item{\em i.} 
+  $M_c$ = \(\frac{10 Mbps}{64 kbps}\) = \(\frac{10,000 kbps}{64 kbps}\) = 156 users
+
+  \item{\em ii.} The python program attached calculates the probability that the number of transmitting users, N, is greater than Mc by computing this formula:
+
+\[1 - {\sum_{i=0}^{Mc}} {M_p \choose i} p^i (1-p) ^ {M_p - i}\] where p = 0.2, Mc = 156 users, Mp = 312 users.
+  \end{description}
+
+\item{{\bf (d) }}It is important to have an accurate 'Mp', 'r', and 'p' because it will affect how you many users you can have on your packet-switching network at a time, how many packets they can transmit, and how fast you can transmit those packets. If these parameters are not correct, then it will lead to more packet loss.
+
+\end{description}
+
+%=============================================================================
+\subsection* {Question 2}
+
+\begin{description}
+
+\item{{\bf (a)}} The propagation delay from $A$ to $B$ is:
+
+\begin{align}
+propagation delay& = distance/speed of propagation \\ 
+	  					   =  length_link/speed of light \\ 
+	  					  =  50 km / 1.079e+9 km/hr \\
+	  					   =  4.6339203 x 10 ^ -8 hr * (3600 min/hr) \\
+	  					   =  1.7 x 10 ^ -4 secs \\
+\end{align}
+
+\item{{\bf (b) 5 points.}} What is the transmission delay of the packet
+  at $A$? Recall that transmission delay is the time from when the
+  first bit of the packet is sent into the wire to when the last bit
+  is sent into the wire.
+
+\item {{\bf (c) 5 points.}} How long must a packet be so that $B$
+  receives the first bit at the same time that $A$
+  sends the last bit?
+
+\end{description}
+
+%=============================================================================
+\subsection* {Question 3 (15 points): Reading an RFC}
+
+Download and read the Request For Comments (RFC) at {\tt
+https://tools.ietf.org/html/rfc1958}, titled ``Architectural
+Principles of the Internet.''
+
+\begin{description}
+\item{{\bf (a) 5 points.}} What is the benefit of making the Internet
+  level protocol (i.e., IP) independent of hardware?
+
+\item{{\bf (b) 5 points.}} Summarize the end-to-end argument in a few
+  sentences. Include the benefit of having end-to-end protocols when
+  there are network failures.
+
+\item{{\bf (c) 5 points.}} Do you think the architectural principles
+  have stood the test of time? Explain why or why not in a few
+  sentences.
+
+\end{description}
+
+
+
+%=============================================================================
+\subsection* {Question 4 (15 points):  Playing with traceroute}
+
+The goal of this question is to use traceroute to collect some round-trip time (RTT) delays.
+To find more information about traceroute, type {\tt man traceroute} at a terminal prompt.
+For this question you will need to be on a non-Wesleyan network. If you
+are having trouble getting access to one, you can telnet to a non-Wesleyan host by typing
+{\tt telnet route-server.west.allstream.com} at a terminal prompt and doing the traceroute from that host.
+
+\begin{description}
+
+\item{{\bf (a) 3 points.}}  Briefly describe how traceroute works.
+
+\item{{\bf (b) 9 points.}} Use traceroute to connect to {\tt www.stanford.edu}, at 3 different times of day. Run traceroute 5 times at each  time of day, to collect 15 sets of measurements of the round-trip time (RTT) delay to reach www.stanford.edu (ignore the other RTT measurements from the intermediate devices).
+Give the 15 measurements for each time of day and calculate the average and standard deviation for each set of 15 measurements.
+ How many routers are in the path at each time of day? Did the set of routers or the number of routers ever change?
+Do you ever see the delay to reach a closer host exceed the delay to reach a farther away host? If so, what do you hypothesize that the variation is due to?
+
+\item{{\bf (c) 3 points.}}  For one of your times of day in part (b), list out the names of intervening routers. Based on these names, can you identify the ISPs in the path from source to destination?
+ For example, my traceroute to {\tt www.standford.edu} when telnet-ing from {\tt route-server.west.allstream.com} shows a router name that ends in {\tt he.net}.  If I google {\tt he.net}, I find out that {\tt he.net} is Hurricane Electric Internet Services. There is no right or wrong answer for this question, just see what you can find out.
+
+\end{description}
+
+
+
+%=============================================================================
+\subsection* {Question 5 (30 points): Getting familiar with Wireshark}
+
+The purpose of this question is to have you setup Wireshark on your
+personal computer (or figure out how to get access to it on a lab
+computer), and to give you some familiarity with using Wireshark. For
+the following questions, you will record some basic information to
+show you have completed the assigned tasks using Wireshark.
+
+\begin{description}
+
+\item{\bf (a) 10 points.} Follow the instructions at {\tt
+  https://www.wireshark.org/download.html} to download and setup
+  Wireshark. Once you have Wireshark setup, start it and select an
+  interface on which to record.  What is the interface on which you
+  are recording traffic? Why did you choose the interface that you
+  did?
+
+\item{\bf (b) 10 points.} While Wireshark is recording a trace, open an
+  Internet browser and load the webpage {\tt www.nytimes.com}. After
+  the wepage has loaded, stop the trace recording.
+
+  \begin{description}
+    \item{\em i. (5 points).}  List the different protocols that you
+      see.
+    \item{\em ii. (5 points).} In which layer of the network protocol
+      stack does each protocol belong? Are there protocols for which
+      you cannot determine the appropriate layer? If so, which
+      protocols?
+  \end{description}
+
+
+\item{\bf (c) 10 points.} Start Wireshark recording a trace.  Enter
+  the display filter {\tt tcp.port==80 and http} into Wireshark.
+  While Wireshark is running, open a terminal.  As we did in lecture,
+  type {\tt nc www.google.com 80} at the terminal prompt. As the {\tt
+    nc} command hangs, type the following HTTP GET request. Make sure
+  to press enter twice after typing it.
+\begin{verbatim}
+GET / HTTP/1.0
+Host: www.google.com
+
+\end{verbatim}
+Take a screenshot of the packet you see in Wireshark that is generated
+by this command, and include the screenshot in your homework
+assignment.
+
+\end{description}
+
+\end{document}
+
+
+
+\end{document}

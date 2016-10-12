@@ -1,0 +1,63 @@
+Homework 1: Victor Chu 9/24
+
+1)	a. The maximum number of users Mc that circuit switching can support is R/r.
+	b. 	
+		i. The probability that a given user is transmitting is p.
+		ii. The formula for the probability that exactly N of the Mp users are transmitting is: 
+			(Mp, N) * p ^ N * (1-p) ^ (Mp - N)
+		iii. The formula for the probability that more than N of the Mp users are transmitting is:
+			1 - sum of 0 to N [(Mp, N) * p ^ N * (1-p) ^ (Mp - N)]
+	c. 
+		i. 10 Mbps/64 kbps = 10,000 kbps/ 64 kbps  = ~ 156 users
+		ii. Let Mp = 2Mc.
+			R = 10 Mbps
+			r = 64 kbps
+			p = 0.2
+			
+			p (N <= Mc) = sum of 0 to Mc[(Mp, i) * p ^ i * (1-p) ^ (Mp - i)]
+			p (N > Mc) = 1 - p(N <= Mc)
+
+			p (N > Mc) = 1 - sum of 0 to 156[(2*156, i) 0.2 ^ i (0.8) ^ (2*156 - i)] 
+
+			In probability.py
+
+	d. It is important to have an accurate 'Mp', 'r', and 'p' because it will affect how you many users you can have on your packet-switching network at a time, how many packets they can transmit, and how fast you can transmit those packets. If these parameters are not correct, then it will lead to more packet loss.
+
+2)	R = 10 Mbps or 10,000 kbps
+  	length_packet = 2 kb
+  	length_link = 50 km
+  	speed of light = 1.079e+9 km/hr
+
+	a.	propagation delay = distance/speed of propagation
+	  					  = length_link/speed of light
+	  					  = 50 km / 1.079e+9 km/hr
+	  					  = 4.6339203 x 10 ^ -8 hr * (3600 min/hr)
+	  					  = 1.7 x 10 ^ -4 secs
+
+	b.	transmission delay = length of packet/transmission rate of link
+	  					  = 2 kb/ 10,000 kbps
+	  					  = .0002 secs
+	c.  PD = propagation delay
+		TD = transmission delay
+		PD - TD = 0 
+		TR = transmission rate of link
+
+		PD = TD = length of packet / TR
+		PD * TR = x
+		x = 1.7e-4 * 10,000 kbps
+		x = 1.7 Kb
+3)
+	a. Making IP independent of hardware is beneficial because it allows the internet to use any kind of new digital transmission technology and to separate its addressing mechanisms from the hardware. Moreover, it allows the Internet to easily interconnect different types of transmission media and acts as a single platform for a variety of Information Infrastructure applications and services.
+
+	b. The end-to-end argument is that certain required end-to-end functions are limited to performing correctly on end-systems themselves. In the example of any network, no matter how they are designed, they are statistically bound to fail. In order to deal with this, we will have to accept failure and give the responsibility for the integrity of communication to the end systems. 
+	When there are network failures, it is beneficial to have end-to-end protocols in order to allow applications to survive. An end-to-end protocol doesn't depend on the maintenance of state inside the network, but instead maintains the states at the endpoints themselves, so the state will only be destroyed when an endpoint breaks.
+
+	c. I believe that the architectural principles that are described in this article has stood the test of time because some of them, such as the general design issues, are still used today. However, some of these principles may have depreciated since the publication of this article (1996), which is two decades ago. I'm not sure which principles have depreciated, but the one principle of constant change has and will withstand the test of time forever.
+
+5) 
+	a. I am recording traffic on the Wi-Fi: en0 because I am using the wifi connection right now.
+	b. 	
+		i. ARP, DNS, HTTP, MDNS, QUIC, TCP
+		ii. ARP: Link, DNS: Application, HTTP: Application, TCP: Transport, TLSv1: 
+		cannot determine: MDNS, QUIC, TLSv1, TLSv1.2 
+	
