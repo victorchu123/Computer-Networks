@@ -17,16 +17,7 @@ class EchoClient():
         self.start(server_host, server_port, url)
 
     def start(self, server_host, server_port, url):
-
-        host_and_path = self.parse_url(url)
-        host = host_and_path[0]
-        path = host_and_path[1]
-
-        for i in range(1, len(host_and_path)):
-            if (host_and_path[1] == ''):
-                path = "/"
-            else:
-                path = host_and_path[1]
+        host, path = self.parse_url(url)  # parses whole url received into host and path
 
         # Try to connect to echo server
         try:
@@ -39,7 +30,7 @@ class EchoClient():
                 sock.close()
             sys.exit(1)
 
-        # Send message string to server over socket
+        # HTTP GET Request to send to Web Proxy over the socket
         str_msg = 'GET {} HTTP/1.1\r\nHost: {}\r\n\r\n'.format(path, host)
 
         try:
@@ -47,8 +38,9 @@ class EchoClient():
         except UnicodeEncodeError as e:
             print ('Part of the message was unable to be encoded:', e)
 
-        sock.sendall(bin_msg)
+        sock.sendall(bin_msg) # sends HTTP GET Request
 
+        # receives and prints out the HTTP Response from Web Proxy 
         print ("Printing response from Web Proxy...\r\n")
         print (self.recv_resp(sock).decode('utf-8'))
 
@@ -57,16 +49,20 @@ class EchoClient():
         print("Closing TCP connection with Client...")
         sock.close()
 
+    # Receives Proxy HTTP Response
     def recv_resp(self, sock):
         msg = ''
-        msg_encoded = msg.encode('utf-8')
+        msg_encoded = msg.encode('utf-8') # encodes ascii empty string to binary empty string
         while True:
             received_resp = sock.recv(4096)
+            # breaks out if we recv no data
             if not received_resp:
                 break
             msg_encoded += received_resp
         return msg_encoded
 
+    # Parses url into a proper host and path; accounts for 'http://''
+    # and 'www.' urls.
     def parse_url(self, url):
         split_url = url.split('/')
         path = ''
@@ -82,7 +78,11 @@ class EchoClient():
         for i in range(path_start, len(split_url)):
             path += "/"+ split_url[i]
 
-        return [host,path]
+        # handles the case if path is empty
+        if (path == ''):
+            path = "/"
+
+        return (host,path)
 
 def main():
 

@@ -195,7 +195,7 @@ def main():
 
     # Echo server socket parameters
     server_host = 'localhost'
-    server_port = 50007
+    server_port = 50008
 
     # Parse command line parameters if any
     if len(sys.argv) > 1:
