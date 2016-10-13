@@ -3,7 +3,7 @@
 # COMP 360, Section 1, Fall 2016
 # Victor Chu
 #
-# This is a cache that stores all the most recent HTTP Responses 
+# This is a cache, made from a dictionary, that stores all the most recent HTTP Responses 
 # as entries with the form of {URL: [Date_Last_Modified, HTTP Response]}.
 #
 

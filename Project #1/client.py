@@ -104,9 +104,9 @@ def main():
     if len(sys.argv) == 2:
         url = sys.argv[1]
     elif len(sys.argv) > 2:
-        server_host = sys.argv[1]
-        server_port = int(sys.argv[2])
-        url = sys.argv[3]
+        url = sys.argv[1]
+        server_host = int(sys.argv[2])
+        server_port = sys.argv[3]
 
     # Create EchoClient object
     client = EchoClient(server_host, server_port, url)
