@@ -12,7 +12,6 @@
 
 import socket
 import sys
-import struct
 
 class EchoClient():
 
@@ -24,8 +23,6 @@ class EchoClient():
         host_and_path = self.parse_url(url)
         host = host_and_path[0]
         path = host_and_path[1]
-
-        print ("URL:" + host + path)
 
         for i in range(1, len(host_and_path)):
             if (host_and_path[1] == ''):
@@ -54,14 +51,12 @@ class EchoClient():
 
         sock.sendall(bin_msg)
 
-        # Get response data from server and print it
-        # str_resp = sock.recv(4096)
-
-        # print ('Client received:\n', str_resp)
-
+        print ("Printing response from Web Proxy...\r\n")
         print (self.recv_resp(sock).decode('utf-8'))
 
         # Close server socket
+        print ('')
+        print("Closing TCP connection with Client...")
         sock.close()
 
     def recv_resp(self, sock):
@@ -71,8 +66,7 @@ class EchoClient():
             received_resp = sock.recv(4096)
             if not received_resp:
                 break
-            else:
-                msg_encoded += received_resp
+            msg_encoded += received_resp
         return msg_encoded
 
     def parse_url(self, url):

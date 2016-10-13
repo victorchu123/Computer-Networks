@@ -59,18 +59,14 @@ class EchoServer():
         # Receive data from client
         bin_data = client_conn.recv(1024)
 
-        # Echo back received data to client
-        # client_conn.sendall(bin_data)
-
         # Print data from client
-        # print ('Server received', bin_data)
+        print ('Server received', bin_data)
 
         try:
             get_request = bin_data.decode('utf-8')
         except UnicodeDecodeError as e:
             print ('Part of message was unable to be decoded:', e)
 
-        # print ("GET Request: ", get_request)
         host, path = self.parse_request(get_request)
 
         if ("http://" in path):
@@ -87,17 +83,15 @@ class EchoServer():
                 bin_data = get_request.encode('utf-8')
             except UnicodeEncodeError as e:
                 print ('Part of message was unable to be encoded:', e)
-
-        print ('HTTP_request:\n' + get_request)
+        else:
+            get_request = 'GET {} HTTP/1.1\r\nHost: {}\r\nConnection: Close\r\n\r\n'.format(path, host)
+            bin_data = get_request.encode('utf-8')
 
         url = host+path
-
-        # print ('Host:{}\n Path:{}'.format(host, path))
+        sock = None
 
         sock = self.open_HTTP_conn(host)
-        time = strftime("%a, %d %b %Y %H:%M:%S GMT", gmtime())
-
-        response = self.get_response(sock, url, time, bin_data, host, path)
+        response = self.get_response(sock, url, bin_data, host, path)
 
         try:
             client_conn.sendall(response) # sends encoded message to server
@@ -105,16 +99,20 @@ class EchoServer():
             print ("Failed send over whole message.")
             if (client_conn is not None):
                 client_conn.close()
-        
+            
         if (sock is not None):
+            print("Closing TCP connection with Web Server...")
             sock.close()
+
 
         # Close connection to client
         if (client_conn is not None):
+            print("Closing TCP connection with Client...")
             client_conn.close()
 
-    def get_response(self, sock, url, time, bin_data, host, path):
+    def get_response(self, sock, url, bin_data, host, path):
         # checks if url is in cache already
+        print ("Checking if URL is in cache...")
         if cache.get(url) is not None:
             # conditional get request
             time = cache.get(url)[0]
@@ -124,7 +122,6 @@ class EchoServer():
                 print ('Part of message was unable to be decoded:', e)
 
             get_request_modded = 'GET {} HTTP/1.1\r\nHost: {}\r\nIf-Modified-Since: {}\r\nConnection: Close\r\n\r\n'.format(path, host, time)
-            # print ("Modded GET Request: " + str(get_request_modded))
 
             try:
                 bin_request_modded = get_request_modded.encode('utf-8')
@@ -132,6 +129,7 @@ class EchoServer():
                 print ('Part of message was unable to be encoded:', e)
 
             try:
+                print ("Sending request to server...")
                 sock.sendall(bin_request_modded)
             except AttributeError as e:
                 print ("No socket found: ", e)
@@ -149,7 +147,10 @@ class EchoServer():
         else: 
             print ("URL not in cache...")
             try:
+                print("Sending request to server...")
                 sock.sendall(bin_data)
+                print("Sent request to server, receiving data from server...")
+                time = strftime("%a, %d %b %Y %H:%M:%S GMT", gmtime())
                 response = self.recv_resp(sock)
                 cache.set(url, [time, response])
                 return response
@@ -165,8 +166,6 @@ class EchoServer():
             host_arr = get_request.split("Host: ")[1].split(" ")[0].split("\r")
             host = host_arr[0]
             path = url_split[1]
-
-            print ('Host:{} Path:{}'.format(host, path))
         except IndexError as e:
             print ("GET_request cannot be parsed:", e)
 
@@ -181,7 +180,7 @@ class EchoServer():
             return sock
         except OSError as e:
             print ('Unable to connect to socket: ', e)
-      
+
     def recv_resp(self, sock):
         msg = ''
         msg_encoded = msg.encode('utf-8')
@@ -189,15 +188,14 @@ class EchoServer():
             received_resp = sock.recv(4096)
             if not received_resp:
                 break
-            else:
-                msg_encoded += received_resp
+            msg_encoded += received_resp
         return msg_encoded
 
 def main():
 
     # Echo server socket parameters
     server_host = 'localhost'
-    server_port = 50009
+    server_port = 50008
 
     # Parse command line parameters if any
     if len(sys.argv) > 1:
