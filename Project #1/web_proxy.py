@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 #
 # COMP 360, Section 1, Fall 2016
-# V. Manfredi
+# Victor Chu
 #
-# Simple multi-threaded echo server that echos back whatever is sent to it
-#
-# Usage:
-#   python3 echo_server.py <server_host> <server_port>
+# 
 #
 
 import socket

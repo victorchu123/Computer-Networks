@@ -49,7 +49,9 @@ class EchoClient():
         print("Closing TCP connection with Client...")
         sock.close()
 
-    # Receives Proxy HTTP Response
+    # Purpose & Behavior: Receives Proxy HTTP Response
+    # Input: Socket that you want to receive a response from.
+    # Output: An utf-8 encoded HTTP response.
     def recv_resp(self, sock):
         msg = ''
         msg_encoded = msg.encode('utf-8') # encodes ascii empty string to binary empty string
@@ -61,8 +63,10 @@ class EchoClient():
             msg_encoded += received_resp
         return msg_encoded
 
-    # Parses url into a proper host and path; accounts for 'http://''
+    # Purpose & Behavior: Parses url into a proper host and path; accounts for 'http://''
     # and 'www.' urls.
+    # Input: URL that you want to parse.
+    # Output: Corresponding host and path.
     def parse_url(self, url):
         split_url = url.split('/')
         path = ''
