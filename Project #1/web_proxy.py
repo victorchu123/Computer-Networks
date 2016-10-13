@@ -94,6 +94,7 @@ class EchoServer():
         response = self.get_response(sock, url, bin_data, host, path)
 
         try:
+            print ("Sending over response back to Client...")
             client_conn.sendall(response) # sends encoded message to server
         except:
             print ("Failed send over whole message.")
@@ -107,13 +108,14 @@ class EchoServer():
 
         # Close connection to client
         if (client_conn is not None):
-            print("Closing TCP connection with Client...")
+            print("Closing TCP connection with Client...\r\n")
             client_conn.close()
 
     def get_response(self, sock, url, bin_data, host, path):
         # checks if url is in cache already
         print ("Checking if URL is in cache...")
         if cache.get(url) is not None:
+            print ("URL is in cache...")
             # conditional get request
             time = cache.get(url)[0]
             try:
@@ -129,7 +131,7 @@ class EchoServer():
                 print ('Part of message was unable to be encoded:', e)
 
             try:
-                print ("Sending request to server...")
+                print("Sending request to Web Server: {}...".format(url))
                 sock.sendall(bin_request_modded)
             except AttributeError as e:
                 print ("No socket found: ", e)
@@ -138,20 +140,20 @@ class EchoServer():
             new_time = strftime("%a, %d %b %Y %H:%M:%S GMT", gmtime())
 
             if ("304 Not Modified".encode('utf-8') in response):
-                print ("Getting response from cache...")
+                print ("Webpage has not been modified; returning response from cache...")
                 return cache.get(url)[1]
             else:
-                print ("Returning updated response...")
+                print ("Webpage has been updated; returning updated response and updating cache")
                 cache.set(url, [new_time, response])
                 return response            
         else: 
-            print ("URL not in cache...")
+            print ("URL is not in cache...")
             try:
-                print("Sending request to server...")
+                print("Sending request to Web Server: {}...".format(url))
                 sock.sendall(bin_data)
-                print("Sent request to server, receiving data from server...")
                 time = strftime("%a, %d %b %Y %H:%M:%S GMT", gmtime())
                 response = self.recv_resp(sock)
+                print ("Storing response in cache...")
                 cache.set(url, [time, response])
                 return response
             except AttributeError as e:
@@ -195,7 +197,7 @@ def main():
 
     # Echo server socket parameters
     server_host = 'localhost'
-    server_port = 50008
+    server_port = 50007
 
     # Parse command line parameters if any
     if len(sys.argv) > 1:
