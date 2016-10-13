@@ -38,8 +38,11 @@ class EchoClient():
         except UnicodeEncodeError as e:
             print ('Part of the message was unable to be encoded:', e)
 
-        sock.sendall(bin_msg) # sends HTTP GET Request
-
+        try:
+            sock.sendall(bin_msg) # sends HTTP GET Request
+        except Exception as e:
+            print ("GET Request failed to send:", e)
+            
         # receives and prints out the HTTP Response from Web Proxy 
         print ("Printing response from Web Proxy...\r\n")
         print (self.recv_resp(sock).decode('utf-8'))
@@ -54,7 +57,11 @@ class EchoClient():
     # Output: An utf-8 encoded HTTP response.
     def recv_resp(self, sock):
         msg = ''
-        msg_encoded = msg.encode('utf-8') # encodes ascii empty string to binary empty string
+        try: 
+            msg_encoded = msg.encode('utf-8') # encodes ascii empty string to binary empty string
+        except UnicodeEncodeError as e:
+            print ('Part of message was unable to be encoded:', e)
+
         while True:
             received_resp = sock.recv(4096)
             # breaks out if we recv no data
@@ -89,7 +96,6 @@ class EchoClient():
         return (host,path)
 
 def main():
-
     # Echo server socket parameters
     server_host = 'localhost'
     server_port = 50008
