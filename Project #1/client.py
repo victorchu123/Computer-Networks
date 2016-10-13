@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 #
 # COMP 360, Section 1, Fall 2016
-# V. Manfredi
+# Victor Chu
 #
-# Simple echo client that makes a connection to an echo server,
-# sends a string to the server, then terminates
-#
-# Usage:
-#   python3 echo_client.py <server_host> <server_port>
+# This is a client that makes a TCP connection to a web proxy,
+# sends a get HTTP request to the server, and prints out the 
+# HTTP response from the Web Proxy.
 #
 
 import socket

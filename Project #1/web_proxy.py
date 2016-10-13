@@ -105,11 +105,9 @@ class EchoServer():
             print("Closing TCP connection with Web Server...")
             sock.close()
 
-
         # Close connection to client
-        if (client_conn is not None):
-            print("Closing TCP connection with Client...\r\n")
-            client_conn.close()
+        print("Closing TCP connection with Client...\r\n")
+        client_conn.close()
 
     def get_response(self, sock, url, bin_data, host, path):
         # checks if url is in cache already
