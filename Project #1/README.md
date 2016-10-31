@@ -20,7 +20,6 @@
 					server_host (host that we want to connect to)
 					server_port (port that we want to connect to)
 	- web_proxy.py
-	
 		FOR RUNNING WITH CLIENT
 		-----------------------
 		- 	1. cd to directory with file 
