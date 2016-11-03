@@ -34,5 +34,5 @@
 		FOR RUNNING WITH WEB BROWSER
 		----------------------------
 		-	same steps as above, type in "localhost 50007" for optional_args
-
+		-	***In this case, go to your favorite web browser's proxy settings and select the Web Proxy (HTTP) Protocol and set up the Web Proxy Server as localhost:50007***
 
