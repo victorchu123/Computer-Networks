@@ -8,31 +8,33 @@
 		- Purpose: Stores HTTP Responses in a dictionary
 
 ##Usage:
-	- client.py
-		- 	1. cd to directory with file
-			2. type in './client.py positional_args optional_args'
+	FOR RUNNING WITH CLIENT
+	-----------------------
+	1) run web_proxy.py
+		a. cd to directory with file 
+		b. type in './web_proxy.py optional_args'
 
-				where 
-				-----
-				positional_args (required arguments):
-					URL (http:// or www.)
-				optional_args (optional arguments):
-					server_host (host that we want to connect to)
-					server_port (port that we want to connect to)
-	- web_proxy.py
-		FOR RUNNING WITH CLIENT
-		-----------------------
-		- 	1. cd to directory with file 
-			2. type in './web_proxy.py optional_args'
+			where
+			-----
+			optional_args (optional arguments):
+				server_host (host that we want to connect to): default = localhost
+				server_port (port that we want to connect to): default = 50008
+	2) run client.py
+		a. cd to directory with file
+		b. type in './client.py positional_args optional_args'
 
-				where
-				-----
-				optional_args (optional arguments):
-					server_host (host that we want to connect to): default = localhost
-					server_port (port that we want to connect to): default = 50008
+			where 
+			-----
+			positional_args (required arguments):
+				URL (http:// or www.)
+			optional_args (optional arguments):
+				server_host (host that we want to connect to)
+				server_port (port that we want to connect to)
 		
-		FOR RUNNING WITH WEB BROWSER
-		----------------------------
-		-	same steps as above, type in "localhost 50007" for optional_args
-		-	***In this case, go to your favorite web browser's proxy settings and select the Web Proxy (HTTP) Protocol and set up the Web Proxy Server as localhost:50007***
+	FOR RUNNING WITH WEB BROWSER
+	----------------------------
+	1) run web_proxy.py
+		-same steps as running with client, but type in "localhost 50007" for optional_args
+	2) go to your favorite web browser's proxy settings and select the Web Proxy (HTTP) Protocol and set up the Web Proxy Server as localhost:50007
+	3) test the web proxy out with all HTTP websites
 
