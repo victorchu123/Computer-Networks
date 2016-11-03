@@ -36,5 +36,5 @@
 	1) run web_proxy.py
 		-same steps as running with client, but type in "localhost 50007" for optional_args
 	2) go to your favorite web browser's proxy settings and select the Web Proxy (HTTP) Protocol and set up the Web Proxy Server as localhost:50007
-	3) test the web proxy out with all HTTP websites
+	3) test the web proxy out with any HTTP websites
 
