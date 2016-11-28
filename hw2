@@ -1,0 +1,82 @@
+1.
+
+(a) response_time = # of TCP connections+ tranmission delay
+	time for connections = # of objs * RTT * 2 = 6 * 2 * 100 ms = 1200 ms
+	RTT = 100 ms
+	length_link = 50 Mbps or 50,000 Kbps
+	webpage_html_obj = 7 Kbits
+	images = 5 * 2.5 Kbits = 12.5 Kbits
+
+	total_len_pkt = webpage_html_obj + images = 19.5 Kbits
+
+	transmission delay = 19.5 Kb / 50,000 Kbps
+					   = .00039 secs
+
+	response_time = 1200 ms + .390 ms
+				  = 1200.390 ms
+
+(b)	Since we can have two parallel connections, we can divide time for TCP connections we need to set up by 2.
+	time for connections = 1200 ms / 2 = 600 ms
+	transmission delay = (7 + 2.5 + 2.5) / 50,000 Kbps (highest three packets lengths)
+					   = 0.00024 secs = .24 ms (need to wait before each parallel connection is created)
+	response_time = 600ms + .24 ms
+				  = 600.240 ms
+
+(c) time for connections = 7 * 100 ms = 700ms ((1 tcp connection + 6 objects) * RTT)
+
+	response_time = 700ms + .390ms
+				  = 700.390 ms
+
+(d) time for TCP connections = 200ms ((1 tcp connection + 1 max object) * RTT)
+	new_trans_delay = 7 Kb / 50,000 Kbps (we take the max of all individual packets)
+					= 0.00014 secs
+					= .14 ms
+	response_time = 200ms + .14 ms
+				  = 200.14 ms
+
+(e) Non-Persistent HTTP connections are useful in the cases where parallel connections are allowed and pipelining is not allowed in Persistent connections. Moreover, it is preferred in cases where there are less embedded objects in the HTML code, since we only have to get one HTML object. Lastly, I believe that Non-Persistent connections are more secure than Persistent connections, so they are used in situations where you want to connect to a website more securely.
+
+2.
+
+(a) 1. a.root-servers.net
+	2. a.edu-servers.net
+	3. ns3.wesleyan.edu
+
+(b) 1. a.root-servers.net
+	2. f.edu-servers.net
+	3. usw2.akam.net 
+	4. auth-ns2.csail.mit.edu
+
+3.
+
+(a) 1. Packet i is sent to receiver with sequence number 0.
+	2. Receiver receives packet i and sends back ack(i) since sequence numbers match up and we get an OK.
+	3. Packet j is sent to receiver with sequence number 1.
+	4. Receiver receives packet j and sequence numbers match up, but we get a NOT OK because of a corrupted packet; sends back ack(j-1)
+	5. Sender receives ack(j-1) and sends out packet j again.
+	6. Receiver receives packet j and sends back ack(j) since sequence numbers match up.
+
+	In this case, packet j is delivered to the receiver twice it arrived as a corrupted packet the first time and had to be resent.
+
+(b) 1. Packet i is sent to receiver with sequence number 0.
+	2. Receiver receives packet i and sends back ack(i) since sequence numbers match up.
+	3. The next packet, j, is sent to receiver with sequence number 1.
+	6. Receiver never receives packet j because of a network crash.s
+
+	In this case, packet j is never delivered to the receiver. 
+
+4. 
+
+(a) True, it is possible because the receiver reacknowledges already received packets below the current window base. This is necessary in the case that the sender doesn't receive an ACK for an already received packet on the receiver's side or else the sender cannot move forward.
+
+(b) False, it is not possible because GBN requires a cumulative acknowledgement from packet with sequence number n, which tells us that all packets with a sequence number up to and including n have been correctly received at the receiver, i.e. all packets in the current window send ACKs back to the sender. Only after this cumulative ACK can the window slide and move on to the next packets. Therefore, we cannot receive ACKs for packets that are outside the current window.
+
+5. 
+
+(a) In the second segment sent from Host A to Host B, the sequence number is 289, the source port number is 503, and the destination port number is 80.
+
+(b) If the first segment arrives before the second, then the acknowledgement number is 289, the source port number is 80, and the destination port number is 503.
+
+(c) If the second segment arrives before the first, then the acknowledgement number is 249 because Host B is still waiting for bytes 249 - 288 to arrive.
+
+(d) 

@@ -23,6 +23,9 @@ Usage:
 					server_host (host that we want to connect to)
 					server_port (port that we want to connect to)
 	- web_proxy.py
+	
+		FOR RUNNING WITH CLIENT
+		-----------------------
 		- 	1. cd to directory with file 
 			2. add '#!python3_path' to the beginning of the file;
 				type in 'which python' in terminal to find this.
@@ -33,5 +36,10 @@ Usage:
 				where
 				-----
 				optional_args (optional arguments):
-					server_host (host that we want to connect to)
-					server_port (port that we want to connect to)
+					server_host (host that we want to connect to): default = localhost
+					server_port (port that we want to connect to): default = 50008
+		
+		FOR RUNNING WITH WEB BROWSER
+		----------------------------
+		-	same steps as above, type in "localhost 50007" for optional_args
+

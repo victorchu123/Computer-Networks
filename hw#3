@@ -1,0 +1,55 @@
+Sources: Computer Networking textbook, http://www.routeralley.com/guides/qos queuing.pdf
+
+1) 	a. 1-7
+	b. 7-15, 19-27
+	c. 16-18, since this round is between two AIMD rounds and the cwnd is between 72 and cwnd/2 (36).
+	d. The segment loss is due to a triple duplicate ack because if a timeout happened, the size of the congestion window would drop at 1 MSS.
+	e. The segment loss is due to a timeout since the size of the congestion window dropped to 1 MSS.
+	f. 64 kb; initial value of ssthresh
+	g. 36; 72/2 because AIMD is transitioning to fast recovery.
+	h. 36; because it stays the same as fast recovery transitions to the second AIMD.
+	i. 22; 44/2 (peak of round 27 divided by 2) because AIMD is ending.
+	j. 5th round: 1+2+4+8+16 = 31 segments 
+	6th round: 1+2+4+8+16+32 = 63 segments
+	So the 61st segment is transmitted at the 6th round.
+
+2) 	a. Hardware queues always process packets using FIFO as a queuing discipline.
+	b. FIFO is inadequate when you need to give preference to high-priority traffic such as VOIP.
+	c. When the hardware queues need to prioritize some traffic, they can use some form of software queuing. 
+	d. These three 3-bit IP Precedence Values can prioritize traffic: 000 - Routine or Best Effort, 001 - Priority, 101 - Critical
+
+3)	All subnets have the prefix 223.1.17/24 as stated by the question.
+	Subnet 1: 223.1.17.0/25; this subnet needs to support 70 interfaces, so we just need a block of 128 addresses; so we need to fix 25 bits in order to have 2^7 addresses. 
+	Subnet 2: 223.1.17.128/26; this subnet needs to support 60 interfaces, so we just need a block of 64 addresses; so we need to fix 26 bits in order to have 2^6 addresses. 
+	Subnet 3: 223.1.17.192/26; this subnet needs to support 60 interfaces, so we just need a block of 64 addresses; so we need to fix 26 bits in order to have 2^6 addresses. 
+
+	From Subnet 1, we have ip addresses: 223.1.17.0 to 223.1.17.127 = 128 addresses.
+	From Subnet 2, we have addresses: 223.1.17.128 to 223.1.17.191 = 64 addresses.
+	From Subnet 3, we have: 223.1.17.192 to 223.1.17.255 = 64 addresses.
+
+5)	a. 	screenshot in pictures folder
+	b. 	IP Header Length: 20 bytes
+		IP packet bytes: 420 bytes (with IP Header)
+
+		Fields: 
+			1. Version: 1 byte
+			2. Header Length: 1 byte
+			3. Differentiated Services Field: 1 byte
+			4. Total Length: 2 bytes
+			5. Identification: 2 bytes
+			6. Flags: 1 byte
+			7. Fragment offset: 2 bytes
+			8. TTL: 1 byte
+			9. Protocol: 1 byte
+			10. Header checksum: 2 bytes
+			11. Source: 4 bytes
+			12. Destination: 4 bytes
+	c. 	TCP Header Length: 32 bytes
+		TCP Segment Size: 368 bytes
+	d. Fields that vary from packet to packet:
+		Differentiated Services Field, Total Length, Identification, TTL, Header checksum, Source, Destination
+
+
+
+
+
